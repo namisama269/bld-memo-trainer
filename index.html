@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eksheke</title>
+    <style>
+        h1 {
+            font-weight: bold;
+            color: #000000;
+            font-size: 24px;
+            margin-bottom: 20px; /* Add margin at the bottom */
+        }
+        body {
+            background-color: #ffffff; 
+        }
+        canvas {
+            border: 1px solid black; /* Adding a black border with 1px width */
+            width: 400px;
+        }
+        #result {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+        .multiselect-container {
+            margin-top: 10px;
+            display: flex; /* Use flexbox to stack items horizontally */
+            flex-wrap: wrap; /* Allow items to wrap to the next line if necessary */
+        }
+        .multiselect-item {
+            margin-right: 10px; /* Add space between items */
+        }
+        .select-label {
+            margin-bottom: 5px; /* Add margin to the label */
+            display: block; /* Display as block element */
+        }
+        .button {
+            margin-top: 10px; /* Add margin at the top */
+            font-size: 18px;
+            padding: 10px 20px;
+            background-color: #888888;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .answer-container {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .answer-rect {
+            width: 400px;
+            height: 50px;
+            border: 1px solid black;
+        }
+        .answer-text {
+            margin-left: 10px;
+            font-size: 18px;
+        }
+    </style>
+    <script src="cube.js"></script>
+    <script src="helpers.js"></script>
+    <script src="visualCube.js" defer></script>
+    <script src="genCase.js" defer></script>
+</head>
+<body>
+    <h1>BLD Memo Trainer</h1>
+
+    <canvas id="myCanvas" width="1200" height="1200"></canvas>
+    <div id="result"></div>
+
+    <!-- Multi-select list with checkboxes -->
+    <div class="multiselect-container" id="checkboxContainer">
+    </div>
+
+    <!-- Next button -->
+    <button class="button" onclick="showAnswer()">Show Answer</button>
+    <button class="button" onclick="genCase()">Next</button>
+
+    <!-- Answer container -->
+    <div class="answer-container" id="answerContainer" style="display: none;">
+        <div class="answer-rect" id="answer-rect"></div>
+    </div>
+
+    <script>
+        // Labels
+        const labels = ["BUL", "BUR", "LUF", "RUF", "BDL", "BDR", "DFL", "DFR"];
+
+        // Get the container for checkboxes
+        const checkboxContainer = document.getElementById("checkboxContainer");
+
+        // Create checkboxes for each label
+        labels.forEach(label => {
+            const checkboxDiv = document.createElement("div");
+            checkboxDiv.classList.add("multiselect-item");
+
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.id = label;
+            checkbox.value = label;
+
+            const checkboxLabel = document.createElement("label");
+            checkboxLabel.htmlFor = label;
+            checkboxLabel.textContent = label;
+
+            checkboxDiv.appendChild(checkbox);
+            checkboxDiv.appendChild(checkboxLabel);
+
+            checkboxContainer.appendChild(checkboxDiv);
+        });
+        
+        document.addEventListener("keypress", function(event) {
+            if (event.key === " ") {
+                genCase(); 
+            }
+
+            if (event.key === "Enter") {
+                showAnswer(); 
+            }
+        });
+    </script>
+</body>
+</html>
