@@ -1,10 +1,11 @@
 const BLACK = "black";
 const WHITE = "white";
-const YELLOW = "yellow";
-const RED = "red";
-const ORANGE = "orange";
-const GREEN = "lime";
-const BLUE = "blue";
+const YELLOW = "#F0FF00";
+const RED = "#E8120A";
+// const ORANGE = "#FF6500"; // fluoro bright orange
+const ORANGE = "#FB8C00";
+const GREEN = "#66FF33";
+const BLUE = "#2055FF";
 
 const CUBE_COLOR = BLACK;
 
@@ -21,7 +22,6 @@ class VisualCube {
         this.gapSize = gapSize;
 
         this.cubeString = "UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB";
-        // this.cubeString = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
         this.drawInside = false;
 
@@ -47,6 +47,7 @@ class VisualCube {
             "B": ORANGE,
             "z": BLACK,
             "x": "#555555",
+            "r": "#A0A0A0", // grey out stickers in restricted memo mode
         }
         this.faceBase = {
             "U": [this.points[4], this.points[5], this.points[1], this.points[0]],
@@ -94,7 +95,7 @@ class VisualCube {
             ctx.fill();
     
             ctx.strokeStyle = border;
-            ctx.lineWidth = 1.0; 
+            ctx.lineWidth = 2.5; 
             ctx.beginPath();
             ctx.moveTo(sticker4Points[0].x, sticker4Points[0].y);
     
@@ -161,25 +162,33 @@ class VisualCube {
 
 }
 
+/*
+"UUUUUUUUUR...F...D...L...B..."
 
+U 0-8
+R 9-17
+F 18-26
+D 27-35
+L 36-44
+B 45-53
 
-
-
-
-// let cube = new Cube();
-
-// let vc = new VisualCube(500, 500, 150, -0.523598, -0.209439, 0, 3, 0.1);
-// vc.cubeString = cube.asString();
-// vc.drawInside = true;
-
-
-// document.addEventListener("DOMContentLoaded", function() {
-//     const resultDiv = document.getElementById('result');
-
-//     const canvas = document.getElementById('myCanvas');
-//     const ctx = canvas.getContext('2d');
-
-//     // vc.drawCube(ctx);
-
-    
-// });
+             +------------+
+             | U1  U2  U3 |
+             |            |
+             | U4  U5  U6 |
+             |            |
+             | U7  U8  U9 |
++------------+------------+------------+------------+
+| L1  L2  L3 | F1  F2  F3 | R1  R2  R3 | B1  B2  B3 |
+|            |            |            |            |
+| L4  L5  L6 | F4  F5  F6 | R4  R5  R6 | B4  B5  B6 |
+|            |            |            |            |
+| L7  L8  L9 | F7  F8  F9 | R7  R8  R9 | B7  B8  B9 |
++------------+------------+------------+------------+
+             | D1  D2  D3 |
+             |            |
+             | D4  D5  D6 |
+             |            |
+             | D7  D8  D9 |
+             +------------+
+*/

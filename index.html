@@ -3,39 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>eksheke</title>
+    <title>BLD Memo Trainer</title>
     <style>
         h1 {
             font-weight: bold;
             color: #000000;
             font-size: 24px;
-            margin-bottom: 20px; /* Add margin at the bottom */
+            margin-bottom: 20px; 
         }
         body {
             background-color: #ffffff; 
         }
         canvas {
-            border: 1px solid black; /* Adding a black border with 1px width */
             width: 400px;
         }
         #result {
             margin-top: 10px;
             font-size: 18px;
         }
-        .multiselect-container {
-            margin-top: 10px;
-            display: flex; /* Use flexbox to stack items horizontally */
-            flex-wrap: wrap; /* Allow items to wrap to the next line if necessary */
-        }
-        .multiselect-item {
-            margin-right: 10px; /* Add space between items */
-        }
-        .select-label {
-            margin-bottom: 5px; /* Add margin to the label */
-            display: block; /* Display as block element */
-        }
         .button {
-            margin-top: 10px; /* Add margin at the top */
+            margin-top: 10px; 
             font-size: 18px;
             padding: 10px 20px;
             background-color: #888888;
@@ -44,81 +31,83 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        .answer-container {
+        .checkbox-container {
             margin-top: 20px;
-            display: flex;
-            align-items: center;
         }
-        .answer-rect {
-            width: 400px;
-            height: 50px;
-            border: 1px solid black;
-        }
-        .answer-text {
-            margin-left: 10px;
+        .checkbox-container label {
             font-size: 18px;
         }
+        .textbox-container {
+            margin-top: 7px;
+        }
+        .textbox-container input {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
     </style>
-    <script src="cube.js"></script>
-    <script src="helpers.js"></script>
-    <script src="visualCube.js" defer></script>
-    <script src="genCase.js" defer></script>
 </head>
 <body>
     <h1>BLD Memo Trainer</h1>
 
     <canvas id="myCanvas" width="1200" height="1200"></canvas>
-    <div id="result"></div>
 
-    <!-- Multi-select list with checkboxes -->
-    <div class="multiselect-container" id="checkboxContainer">
+    <div class="multiselect-container" id="checkboxContainer"></div>
+
+    <div class="checkbox-container">
+        <input type="checkbox" id="restrictedMemo" name="restrictedMemo">
+        <label for="restrictedMemo">Use Restricted Memo</label>
     </div>
 
-    <!-- Next button -->
-    <button class="button" onclick="showAnswer()">Show Answer</button>
-    <button class="button" onclick="genCase()">Next</button>
-
-    <!-- Answer container -->
-    <div class="answer-container" id="answerContainer" style="display: none;">
-        <div class="answer-rect" id="answer-rect"></div>
+    <div class="textbox-container">
+        <input type="text" id="edgeMemo" placeholder="Edge memo:">
+        <button class="button" aria-label="Use Text" onclick="doEdgeComm()">Execute</button>
     </div>
+
+    <div class="textbox-container">
+        <input type="text" id="cornerMemo" placeholder="Corner memo:">
+        <button class="button" aria-label="Use Text" onclick="doCornerComm()">Execute</button>
+    </div>
+
+    <div class="textbox-container">
+        <input type="text" id="EOMemo" placeholder="Edge flips:">
+        <button class="button" aria-label="Use Text" onclick="doEO()">Execute</button>
+    </div>
+
+    <div class="textbox-container">
+        <input type="text" id="COMemo" placeholder="Corner twists:">
+        <button class="button" aria-label="Use Text" onclick="doCO()">Execute</button>
+    </div>
+
+    <div class="textbox-container">
+        <input type="text" id="parityMemo" placeholder="Parity 2E2C:">
+        <button class="button" aria-label="Use Text" onclick="doParity()">Execute</button>
+    </div>
+
+    <button class="button" aria-label="Next Case" onclick="genCase()">Next</button>
 
     <script>
-        // Labels
-        const labels = ["BUL", "BUR", "LUF", "RUF", "BDL", "BDR", "DFL", "DFR"];
-
-        // Get the container for checkboxes
-        const checkboxContainer = document.getElementById("checkboxContainer");
-
-        // Create checkboxes for each label
-        labels.forEach(label => {
-            const checkboxDiv = document.createElement("div");
-            checkboxDiv.classList.add("multiselect-item");
-
-            const checkbox = document.createElement("input");
-            checkbox.type = "checkbox";
-            checkbox.id = label;
-            checkbox.value = label;
-
-            const checkboxLabel = document.createElement("label");
-            checkboxLabel.htmlFor = label;
-            checkboxLabel.textContent = label;
-
-            checkboxDiv.appendChild(checkbox);
-            checkboxDiv.appendChild(checkboxLabel);
-
-            checkboxContainer.appendChild(checkboxDiv);
+        document.addEventListener('keydown', event => {
+            if (event.code === 'Space' 
+                && document.activeElement.id !== 'edgeMemo' 
+                && document.activeElement.id !== 'cornerMemo'
+                && document.activeElement.id !== 'EOMemo' 
+                && document.activeElement.id !== 'COMemo'
+                && document.activeElement.id !== 'parityMemo'
+            ) {
+                event.preventDefault();
+                genCase();
+            }
         });
         
-        document.addEventListener("keypress", function(event) {
-            if (event.key === " ") {
-                genCase(); 
-            }
-
-            if (event.key === "Enter") {
-                showAnswer(); 
-            }
-        });
     </script>
+
+    <script src="cube.js"></script>
+    <script src="solve.js"></script>
+    <script src="comms.js"></script>
+    <script src="bldAlgs.js"></script>
+    <script src="helpers.js" defer></script>
+    <script src="visualCube.js" defer></script>
+    <script src="genCase.js" defer></script>
 </body>
 </html>

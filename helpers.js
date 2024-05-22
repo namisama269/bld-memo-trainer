@@ -175,3 +175,28 @@ function distToCam(points, width) {
 
     return Math.sqrt(dx * dx + dy * dy + dz * dz);
 }  
+
+function reverseRubiksMoves(moves) {
+    // Split the input string into an array of moves
+    let moveArray = moves.split(' ');
+    
+    // Reverse the order of moves
+    moveArray.reverse();
+    
+    // Function to reverse a single move
+    function reverseMove(move) {
+        if (move.includes('2')) {
+            return move; // '2' moves remain the same
+        } else if (move.includes("'")) {
+            return move.replace("'", ""); // Remove the prime
+        } else {
+            return move + "'"; // Add the prime
+        }
+    }
+
+    // Apply the reverseMove function to each move
+    let reversedMoves = moveArray.map(reverseMove);
+
+    // Join the reversed moves back into a string
+    return reversedMoves.join(' ');
+}
