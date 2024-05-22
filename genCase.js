@@ -81,9 +81,9 @@ function handleCheckboxToggle() {
     // console.log('Restricted Memo Toggled:', useRestrictedMemo);
     if (useRestrictedMemo) {
         restrictedMemoStickerIndices.forEach((index) => { 
-            vc.cubeString = setCharAt(vc.cubeString, index, 'r');
+        // vc.cubeString = setCharAt(vc.cubeString, index, 'r');
         });
-        // vc.cubeString = "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr";
+        vc.cubeString = "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr";
     } else {
         vc.cubeString = cube.asString();
     }
